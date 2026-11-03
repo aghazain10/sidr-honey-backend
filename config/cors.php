@@ -1,9 +1,13 @@
 <?php
 
+$corsOrigins = env('CORS_ALLOWED_ORIGINS');
+
 return [
     'paths' => ['api/*', 'sanctum/csrf-cookie'],
     'allowed_methods' => ['*'],
-    'allowed_origins' => ['http://localhost:3000', 'http://127.0.0.1:3000', '*'],  // ← Add both
+    'allowed_origins' => $corsOrigins
+        ? array_values(array_filter(array_map('trim', explode(',', $corsOrigins))))
+        : ['http://localhost:3000', 'http://127.0.0.1:3000', '*'],
     'allowed_origins_patterns' => [],
     'allowed_headers' => ['*'],
     'exposed_headers' => [],
